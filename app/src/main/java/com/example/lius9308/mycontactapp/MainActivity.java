@@ -1,5 +1,7 @@
 package com.example.lius9308.mycontactapp;
 
+import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDb = new DatabaseHelper(this);
 
         editName = (EditText) findViewById(R.id.editText_name);
         editPhone = (EditText) findViewById(R.id.editText_phone);
         editAddress = (EditText)  findViewById(R.id.editText_address);
 
 
-        myDb = new DatabaseHelper(this);
         Log.d("MyContactApp", "MainActivity: instantiated myDb");
 
 
@@ -39,8 +41,53 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(MainActivity.this,"Failed - contact failed to insert ha", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"Failed - contact failed to insert", Toast.LENGTH_LONG).show();
 
         }
     }
+
+    public void viewData(View view)
+    {
+        Cursor res = myDb.getAllData();
+        Log.d("MyContactApp", "MainActivity: viewData: received cursor");
+        if (res.getCount()==0)
+        {
+            showMessage("Error", "No data found in database");
+            return;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while(res.moveToNext()){
+            //append result column 0,1,2,3 to the buffer- see Stringbuffer and cursor api
+            Log.d("MyContactApp", "MainActivity: viewData: appending data");
+
+            buffer.append("ID: " + res.getString(0));
+            buffer.append("\n");
+            buffer.append("Name: " +res.getString(1));
+            buffer.append("\n");
+            buffer.append("Address: "+res.getString(2));
+            buffer.append("\n");
+            buffer.append("PhoneNumber: " + res.getString(3));
+            buffer.append("\n");
+            Log.d("MyContactApp", "MainActivity: viewData: appending data done");
+
+
+
+            // delimit each of the "appends" with line feed "\n"
+
+        }
+        showMessage("Data", buffer.toString());
+
+    }
+    private void showMessage(String title, String message)
+    {
+        Log.d("MyContactApp", "MainActivity: showMessage: assembling AlertDialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+
+    }
+
 }
