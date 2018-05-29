@@ -1,5 +1,6 @@
 package com.example.lius9308.mycontactapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editName;
     EditText editPhone;
     EditText editAddress;
-
+    EditText editSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editText_name);
         editPhone = (EditText) findViewById(R.id.editText_phone);
         editAddress = (EditText)  findViewById(R.id.editText_address);
-
+        editSearch = findViewById(R.id.editTextsearch);
 
         Log.d("MyContactApp", "MainActivity: instantiated myDb");
 
@@ -65,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("\n");
             buffer.append("Name: " +res.getString(1));
             buffer.append("\n");
-            buffer.append("Address: "+res.getString(2));
+            buffer.append("PhoneNumber: "+res.getString(2));
             buffer.append("\n");
-            buffer.append("PhoneNumber: " + res.getString(3));
+            buffer.append("Address: " + res.getString(3));
             buffer.append("\n");
             Log.d("MyContactApp", "MainActivity: viewData: appending data done");
 
@@ -88,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
 
+    }
+    public static final String EXTRA_MESSAGE = "com.example.lius9308.mycontactapp.MESSAGE";
+    public void searchRecord(View view){
+        Log.d("MyContactApp", "MainActivity: launching SearchActivity");
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, editSearch.getText().toString());
+        startActivity(intent);
     }
 
 }
