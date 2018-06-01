@@ -7,12 +7,13 @@
     tools:context=".SearchActivity">
 
     <TextView
-        android:id="@+id/textViewsearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="212dp"
-        android:layout_marginTop="224dp"
-        android:text="TextView"
+        android:id="@+id/textView2"
+        android:layout_width="332dp"
+        android:layout_height="539dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Nothing found"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
