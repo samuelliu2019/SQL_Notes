@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 100;
+    public static final int DATABASE_VERSION = 5000;
     public static final String DATABASE_NAME = "Contact2018.db";
     public static final String TABLE_NAME = "Contact2018_table";
     public static final String ID = "ID";
@@ -63,12 +63,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getAllData()
-    {
+    public Cursor getAllData() {
         Log.d("MyContactApp", "DatabaseHelper: pulling all records from db");
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+ TABLE_NAME, null);
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
         return res;
-
     }
 }
